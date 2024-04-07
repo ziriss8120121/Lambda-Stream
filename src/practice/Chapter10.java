@@ -2,7 +2,6 @@ package practice;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Chapter10 {
@@ -20,14 +19,12 @@ public class Chapter10 {
                 .count();
         System.out.println("未完了のタスクの個数は" + incompleteCount);
 
-        // 未完了のタスク一覧を日時の昇順に並べて表示
-        Collections.sort(list);
-
+     // 未完了のタスクを日時の昇順に並び替えて一覧表示
         System.out.println("【未完了のタスクを昇順に並び替えて一覧表示】");
-        for (Task task : list) {
-            if (!task.isDone()) {
-                System.out.println(task.getDate() + " " + task.getTask());
-            }
-        }
+        list.stream()
+                .filter(task -> !task.isDone()) // 未完了のタスクのみフィルタリング
+                .sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate())) // 日時の昇順でソート
+                .forEach(task -> System.out.println(task.getDate() + " " + task.getTask())); // 一覧表示    
+        
     }
 }
